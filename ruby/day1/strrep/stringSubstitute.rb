@@ -1,0 +1,1 @@
+print "I am a string".sub!("am","was")
