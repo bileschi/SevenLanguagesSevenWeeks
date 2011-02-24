@@ -1,0 +1,24 @@
+  392  git clone http://kiwi/analyticsDashboard/phpFiles
+  393  git clone git://kiwi/analyticsDashboard/phpFiles
+  396  git clone http://kiwi/analyticsDashboard/phpFiles
+  397  git clone sbileschi@kiwi:/var/www/analyticsDashboard/phpFiles
+  406  git
+  413  git push origin master
+  414  git remote add origin https://bileschi@github.com/bileschi/SevenLanguagesSevenWeeks.git
+  415  git remote add httporigin https://bileschi@github.com/bileschi/SevenLanguagesSevenWeeks.git
+  416  git push httporigin master
+  417  get remote add github git@github.com:bileschi/SevenLanguagesSevenWeeks.git
+  418  git remote add github git@github.com:bileschi/SevenLanguagesSevenWeeks.git
+  419  git push github master
+  425  git status
+  427  git status
+  433  git status
+  435  git status
+  437  git add
+  438  git add day1/
+  439  git status
+  440  git commit -m 'day 1'
+  441  git push github master
+  510  git status
+  511  history | grep git
+  512  history | grep git > remind_git
