@@ -1,4 +1,0 @@
-h1 = "Hello World!"
-h2 = "Hello Ruby!"
-t = /Ruby/
-h2 =~ t
