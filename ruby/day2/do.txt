@@ -1,0 +1,5 @@
+* print the contents of an array of sixteen numbers, 4 numbers ata  time, using just each.  now do the  same with each_slice in Enumerable
+
+* The Tree class was interesting but it did not allow you to specify a new tree with a clean user interface.  let the initlializer acept a nested structure with hashes and arrays.  You should be able to specify a tree like this {'grandpa'=>{'dad'=>{'child 1'=>{},'child 2=>{} },'uncle'=>{'child 3'=>{},'child 4'=>{} } } } .
+
+* write a simple grep that will print th elines of a file having any occurences of a phrase anywhere in that line.  you will need to do a simple regular expression match and read lines from a file.  (this is surprising limple in ruby)   if you want, include line numbers.
