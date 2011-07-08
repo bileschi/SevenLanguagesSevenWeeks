@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 =begin
 * print the contents of an array of sixteen numbers, 
 4 numbers ata  time, using just each.  
