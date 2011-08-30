@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 n_stories = 25
+require 'rubygems'
 require 'open-uri'
 require 'nokogiri'
 puts '<html><head></head><body>'
