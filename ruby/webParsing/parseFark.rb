@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# Experiment to grab the front page of Fark.com and produce a new page with only comments with attached images.
+
 n_stories = 25
 require 'rubygems'
 require 'open-uri'
