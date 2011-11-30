@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# tool to scrape listing of Yahoo! NFL players to determine player position, team, and visage.   For educational purposes only.
+
 require 'rubygems'
 require 'open-uri'
 require 'nokogiri'

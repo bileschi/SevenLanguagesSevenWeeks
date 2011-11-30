@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# Test script to learn how to scrape a Yahoo! NFL player page, circa late Summer 2011
+
 require 'rubygems'
 require 'open-uri'
 require 'nokogiri'
