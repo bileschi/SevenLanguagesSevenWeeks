@@ -1,0 +1,14 @@
+Modify the given "CSV" application to support an 'each' method to return a CsvRow object.  Use method_missing on that CsvRow to return the value for the column for a given heading. 
+
+For example, for the file:
+--- snip ---
+one, two
+lions, tigers
+---/snip/---
+
+allow an API that works like this:
+
+csv = RubyCsv.new
+csv.each {|row| puts row.one}
+
+this should print "lions"
