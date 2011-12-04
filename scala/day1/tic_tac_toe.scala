@@ -1,8 +1,9 @@
 import scala.collection.mutable.HashMap
 
-val boardLocations = Set((1,1),(1,2),(1,3),
+val boardLocations = List((1,1),(1,2),(1,3),
 						 (2,1),(2,2),(2,3),
 						 (3,1),(3,2),(3,3))
+
 val winningSubsets = Set(Set((1,1),(1,2),(1,3)),Set((2,1),(2,2),(2,3)),Set((3,1),(3,2),(3,3)), // rows
 						 Set((1,1),(2,1),(3,1)),Set((1,2),(2,2),(3,2)),Set((1,3),(2,3),(3,3)),   // cols
 						 Set((1,1),(2,2),(3,3)),Set((1,3),(2,2),(3,1))) // diags
@@ -21,9 +22,22 @@ class GameModel {
 		println("Game Reset")
 	}
 	def printBoard() = {
-		println("")
+		// todo: there must be a more flexible, elegant way to do this
+		val s = new StringBuilder()
+		s.append(marks(currentBoard((1,1))) + "|")
+		s.append(marks(currentBoard((1,2))) + "|")
+		s.append(marks(currentBoard((1,3))) + "\n")
+		s.append("-----\n")
+		s.append(marks(currentBoard((2,1))) + "|")
+		s.append(marks(currentBoard((2,2))) + "|")
+		s.append(marks(currentBoard((2,3))) + "\n")
+		s.append("-----\n")
+		s.append(marks(currentBoard((3,1))) + "|")
+		s.append(marks(currentBoard((3,2))) + "|")
+		s.append(marks(currentBoard((3,3))) + "\n")
+		println(s)
 	}
-	def locHas(loc: (Int,Int), thisTurnObj: ScalaObject) = {
+	def locHas(loc: (Int,Int), thisTurnObj: ScalaObject):Boolean = {
 		return currentBoard(loc) == thisTurnObj;
 	}
 }
@@ -34,24 +48,25 @@ class GameControler {
 	def move(loc: (Int,Int), thisTurnObj: ScalaObject):ScalaObject = {
 		if( !gameModel.currentBoard.contains(loc)) {
 			println("invalid board location")
+			printBoard
 			return thisTurnObj
 		} 
-		println(marks)
-		println(marks(Mt))
-		println(gameModel.currentBoard(loc))
-		println(marks(gameModel.currentBoard(loc)))
-		println("current val at " + loc + " is " + gameModel.currentBoard(loc))
 		if ( Mt == gameModel.currentBoard(loc) ) {
-			// nextTurnObj.shout
 			println("moved to " + loc)
 			gameModel.currentBoard += loc -> thisTurnObj
+			printBoard
 			return thisTurnObj
 		}
+		printBoard
+		return thisTurnObj
 	}
-
+	def printBoard() = gameModel.printBoard()
 }
 
 val myGameModel = new GameModel()
 val myGameControler = new GameControler()
 myGameControler.move((1,1),Ex)
-myGameControler.move((3,4),Ex)
+myGameControler.move((3,4),Oh)
+myGameControler.move((1,2),Oh)
+myGameControler.move((2,2),Ex)
+myGameControler.move((3,3),Oh)
