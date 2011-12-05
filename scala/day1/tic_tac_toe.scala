@@ -70,3 +70,11 @@ myGameControler.move((3,4),Oh)
 myGameControler.move((1,2),Oh)
 myGameControler.move((2,2),Ex)
 myGameControler.move((3,3),Oh)
+
+
+for( ln <- io.Source.stdin.getLines ) {
+   var a = (ln.split(",").map( _.toInt))
+   var my_move = (a(0),a(1))
+   println(my_move)
+   myGameControler.move(my_move,Ex)
+}
