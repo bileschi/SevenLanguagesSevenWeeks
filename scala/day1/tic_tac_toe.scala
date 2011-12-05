@@ -37,44 +37,92 @@ class GameModel {
 		s.append(marks(currentBoard((3,3))) + "\n")
 		println(s)
 	}
-	def locHas(loc: (Int,Int), thisTurnObj: ScalaObject):Boolean = {
-		return currentBoard(loc) == thisTurnObj;
+	def locHas(loc: (Int,Int), player: ScalaObject):Boolean = {
+		return currentBoard(loc) == player;
+	}
+	def isWinForPlayer(player: ScalaObject):Boolean = {
+		winningSubsets.exists(subset => subset.forall(pos => currentBoard(pos) == player))
+	}
+	def isDraw():Boolean = {
+		!boardLocations.exists(loc => currentBoard(loc) == Mt)
 	}
 }
 
 class GameControler {
 	val gameModel = new GameModel()
 	gameModel.reset()
-	def move(loc: (Int,Int), thisTurnObj: ScalaObject):ScalaObject = {
+	def move(loc: (Int,Int), player: ScalaObject):Boolean = {
 		if( !gameModel.currentBoard.contains(loc)) {
 			println("invalid board location")
-			printBoard
-			return thisTurnObj
+			return false
 		} 
 		if ( Mt == gameModel.currentBoard(loc) ) {
 			println("moved to " + loc)
-			gameModel.currentBoard += loc -> thisTurnObj
-			printBoard
-			return thisTurnObj
+			gameModel.currentBoard += loc -> player
+			return true
+		} else {
+			return false
 		}
-		printBoard
-		return thisTurnObj
 	}
 	def printBoard() = gameModel.printBoard()
+	def isWinForPlayer(player: ScalaObject):Boolean = gameModel.isWinForPlayer(player)
+	def reset() = gameModel.reset()
+	def isDraw():Boolean = gameModel.isDraw()
 }
 
 val myGameModel = new GameModel()
 val myGameControler = new GameControler()
-myGameControler.move((1,1),Ex)
-myGameControler.move((3,4),Oh)
-myGameControler.move((1,2),Oh)
-myGameControler.move((2,2),Ex)
-myGameControler.move((3,3),Oh)
+//myGameControler.move((1,1),Ex)
+//myGameControler.move((3,4),Oh)
+//myGameControler.move((1,2),Oh)
+//myGameControler.move((2,2),Ex)
+//myGameControler.move((3,3),Oh)
+myGameControler.printBoard
+var players = List(Ex, Oh)
 
 
-for( ln <- io.Source.stdin.getLines ) {
-   var a = (ln.split(",").map( _.toInt))
-   var my_move = (a(0),a(1))
-   println(my_move)
-   myGameControler.move(my_move,Ex)
+println("Welcome to Tic-Tac-Toe!")
+println("please type your plays as integer coordinates like '1,1'  or '3,2'")
+while(true) {
+//for( ln <- io.Source.stdin.getLines ) {
+	print(marks(players(0)) + "'s turn: ")
+	val ln = Console.readLine
+	if(ln.length() > 0) {
+	   var a = (ln.split(",").map( _.toInt))
+	   var my_move = (a(0),a(1))
+	   println(my_move)
+	   // if move is a success, then it's the other players turn
+	   if(myGameControler.move(my_move,players(0))) {
+	   		players = players.reverse
+	   } else {
+		   println("error making move, try again.  something like '1,2' (no quotes) ")
+	   }
+	   myGameControler.printBoard
+	   if(myGameControler.isWinForPlayer(Ex)){ 
+		   println("XXXXXXXXXXXXXX")
+		   println("X is a winner!")
+		   println("XXXXXXXXXXXXXX")
+		   myGameControler.reset
+		   myGameControler.printBoard
+		}
+	   if(myGameControler.isWinForPlayer(Oh)){ 
+		   println("OOOOOOOOOOOOOO")
+		   println("O is a winner!")
+		   println("OOOOOOOOOOOOOO")
+		   myGameControler.reset
+		   myGameControler.printBoard
+		}
+		if(myGameControler.isDraw()) {
+			println("\nDraw\n")
+		  	myGameControler.reset
+			myGameControler.printBoard
+		}
+	}
 }
+
+
+
+
+
+
+
