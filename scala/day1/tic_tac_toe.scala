@@ -70,21 +70,15 @@ class GameControler {
 	def isDraw():Boolean = gameModel.isDraw()
 }
 
-val myGameModel = new GameModel()
 val myGameControler = new GameControler()
-//myGameControler.move((1,1),Ex)
-//myGameControler.move((3,4),Oh)
-//myGameControler.move((1,2),Oh)
-//myGameControler.move((2,2),Ex)
-//myGameControler.move((3,3),Oh)
 myGameControler.printBoard
 var players = List(Ex, Oh)
 
 
 println("Welcome to Tic-Tac-Toe!")
 println("please type your plays as integer coordinates like '1,1'  or '3,2'")
+// main game loop.
 while(true) {
-//for( ln <- io.Source.stdin.getLines ) {
 	print(marks(players(0)) + "'s turn: ")
 	val ln = Console.readLine
 	if(ln.length() > 0) {
