@@ -32,28 +32,28 @@ class AboutNewStyleClasses(Koan):
     # ------------------------------------------------------------------
 
     def test_old_style_classes_have_type_but_no_class_attribute(self):
-        self.assertEqual(__, type(self.OldStyleClass).__name__)
+        self.assertEqual('classobj', type(self.OldStyleClass).__name__)
         
         try:
             cls = self.OldStyleClass.__class__
         except Exception as ex:
             pass
         
-        self.assertMatch(__, ex[0])
+        self.assertMatch("class OldStyleClass has no attribute '__class__'", ex[0])
     
     def test_new_style_classes_have_same_class_as_type(self):
         new_style = self.NewStyleClass()
-        self.assertEqual(__, type(self.NewStyleClass).__name__)
-        self.assertEqual(__, type(self.NewStyleClass) == self.NewStyleClass.__class__)
+        self.assertEqual('type', type(self.NewStyleClass).__name__)
+        self.assertEqual(True, type(self.NewStyleClass) == self.NewStyleClass.__class__)
         
     # ------------------------------------------------------------------
         
     def test_in_old_style_instances_class_is_different_to_type(self):
         old_style = self.OldStyleClass()
-        self.assertEqual(__, type(old_style).__name__)
-        self.assertEqual(__, old_style.__class__.__name__)
+        self.assertEqual('instance', type(old_style).__name__)
+        self.assertEqual('OldStyleClass', old_style.__class__.__name__)
 
     def test_new_style_instances_have_same_class_as_type(self):
         new_style = self.NewStyleClass()
-        self.assertEqual(__, type(new_style).__name__)
-        self.assertEqual(__, type(new_style) == new_style.__class__)
+        self.assertEqual('NewStyleClass', type(new_style).__name__)
+        self.assertEqual(True, type(new_style) == new_style.__class__)
