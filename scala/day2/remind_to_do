@@ -1,0 +1,5 @@
+* use foldLeft to compute the total size of a list of strings.
+
+* Write a Censor trait with a method tht will replace the curs words 'Shoot' and 'Darn' with 'Pucky' and 'Beans' alternatives.  Use a map to store the curse words and their alternatives.
+
+* Load the curse words and the alternatives from a file.
