@@ -87,3 +87,33 @@ def myCodeBlock{
 	println("I am myCodeBlock")
 }
 
+
+
+///////////////////////////////////////////////////////////////////////
+// Do two functions defined in the same scope interact via closures? //
+///////////////////////////////////////////////////////////////////////
+
+// returns a tuple carrying two functions from Int to Int
+def exploreClosures3():(Int => Int, Int => Int) = { 
+	println("[exploreClosures3]")
+	var y = 0
+	def tweedleDee(x: Int) : Int = {
+		println("[heehee]")
+		y += 1
+		return x * 100 + y
+	}
+	def tweedleDum(x: Int) : Int = {
+		println("[hoho]")
+		y += 1
+		return x * 100 + y
+	}
+	return (tweedleDee, tweedleDum)
+}
+
+val twoFuncs = exploreClosures3()
+val twin1 = twoFuncs._1
+val twin2 = twoFuncs._2
+println(twin1(6)) // 601 no doubt
+println(twin1(6)) // 602 no doubt
+println(twin2(6)) // 601 or 603?
+// answer:  they share the same closure value of y.   603.
