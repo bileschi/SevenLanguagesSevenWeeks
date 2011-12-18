@@ -1,0 +1,15 @@
+// read an entire file
+// http://stackoverflow.com/questions/1284423/read-entire-file-in-scala
+
+val source = scala.io.Source.fromFile("file.txt")
+val lines = source .mkString
+source.close ()
+
+// for file with utf-8 encoding
+val lines = scala.io.Source.fromFile("file.txt", "utf-8").getLines.mkString
+
+// if you need to open multiple files, saving text.
+import scala.io.Source._
+val lines = fromFile("file.txt").getLines
+
+

@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+.DS_Store
+answers
+.hg
+#emacs temp files
+*~

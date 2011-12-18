@@ -1,0 +1,6 @@
+http://www.scala-lang.org/node/216
+http://www.scala-lang.org/api/current/index.html#package
+
+Here is an interesting comparsion of Scala Java and C++ WRT multi-threadded performance.  Written by J. Manson, Google Engineer.
+http://jeremymanson.blogspot.com/2011/06/scala-java-shootout.html
+
