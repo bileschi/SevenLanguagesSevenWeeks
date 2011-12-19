@@ -1,16 +1,24 @@
 import scala.io._
 import scala.actors._
 import Actor._
+import util.matching.Regex
 
 object PageLoader {
   def getPageSize(url : String) = scala.io.Source.fromURL(url).mkString.length
   def getPageText(url : String) = scala.io.Source.fromURL(url).mkString
   // embarassingly counts using a regular expression on the string version of the html
-  // there must be a more robust way
+  // there must be a more robust way.  Creates a fresh regex for every url.
   def getCountPageLinks(url : String) = {
     val text = PageLoader.getPageText(url)
     "<a[ >]".r.findAllIn(text).length
   }
+  def getPageLinks(url : String) = {
+    // regex cribbed from https://github.com/hbarriuso/seven/blob/master/scala/day3/src/main/scala/Sizer.scala
+    val linkRegex = new Regex("(?i)<a href=['|\"]([^'^\"]*)['|\"][^>]*>", "link")
+    val text = PageLoader.getPageText(url)
+    val matches = linkRegex.findAllIn(text).matchData
+    for (amatch <- matches) yield  amatch.group("link")
+  }	
 }
 
 val urls = List("http://www.amazon.com",
@@ -28,6 +36,9 @@ def timeMethod(method: () => Unit) = {
 def getPageSizeSequentially() = {
   for(url <- urls) {
     println("SSize for " + url + ": " + PageLoader.getPageSize(url) + ": " + PageLoader.getCountPageLinks(url))
+    for(link <- PageLoader.getPageLinks(url)) {
+      println(link)
+    }
   }
 }
 
