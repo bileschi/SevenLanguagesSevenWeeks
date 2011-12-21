@@ -3,7 +3,7 @@
 # classes for card and pile
 # a pile is an ordered collection of cards with an easy shuffling operation
 from random import shuffle
-
+import pdb
 class Card(object):
 	def __init__(self, name):
 		self._name = name
@@ -16,7 +16,8 @@ class Pile(object):
 		if count > 0:
 			self.add_new_card_to_pile(name, count)
 	def add_card_to_pile(self, card):
-		self._cards.append(card)
+		if card is not None:
+			self._cards.append(card)
 	def add_new_card_to_pile(self, name, count=1):
 		self._cards.extend([Card(name) for i in range(0,count)])
 	def add_others_to_pile(self, other_pile):
@@ -28,7 +29,14 @@ class Pile(object):
 		except AttributeError:
 			self._cards.extend(other_pile)
 			other_pile = []
-	def empty():
+	def count_any_card(self):
+		return len(self._cards)
+	def count_specific_card(self, card_name):
+		c = 0
+		for card in self._cards:
+			c += 1 if card._name == card_name else 0
+		return c
+	def empty(self):
 		""" removes all cards from this pile """
 		self._cards = []
 	def pop(self):
@@ -73,4 +81,9 @@ if __name__ == "__main__":
 	hand.shuffle()
 	print '--------------'
 	hand.pretty_print()
+	print "number of copper: " + str(hand.count_specific_card('copper'))
+	print "number of estate: " + str(hand.count_specific_card('estate'))
+
+
+
 
