@@ -1,0 +1,14 @@
+First Game:
+Cellar, Market, Militia, Mine, Moat, Remodel, Smithy, Village, Woodcutter, Workshop
+
+Big Money:
+Adventurer, Bureaucrat, Chancellor, Chapel, feast, Laboratory, Market, Mine, Moneylender, Throne Room
+
+Interaction:
+Bureucrat, Chancellor, Council Room, Festival, Library, Militia, Moat, Spy, Thief, Villiage
+
+Size Distortion:
+Cellar, Chapel, Feast, Gardens, Laboratory, Thief, Village, Witch, Woodcutter, Workshop
+
+Village Square:
+Bureaucrat, Cellr, Festival, Library, Market, Remode, Smithy, Throne room, Village, Woodcutter
