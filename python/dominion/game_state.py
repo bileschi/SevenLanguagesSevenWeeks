@@ -34,6 +34,11 @@ class Supply(object):
 			return self._piles[pile_name].pop()
 		else:
 			return None
+	def pretty_print(self):
+		for pile_name, pile in self._piles.iteritems():
+			print pile_name + ": " + str(pile.count_any_card())
+	def put_in_trash(self, card):
+		self._piles["Trash"].add_card_to_pile(card)
 
 
 class PlayerCards(object):
@@ -41,6 +46,7 @@ class PlayerCards(object):
 	his deck, and his discard pile.  Provides some basic manipulations for the player, such as drawing cards, 
 	shuffling back in his discard pile, and setting a starting deck."""
 	def __init__(self):
+		self._piles = None
 		self.reset_empty()
 	def count_in_all(self, card_name):
 		""" returns a count of the number of cards with name == card_name in player's deck.  Useful for counting
@@ -61,6 +67,10 @@ class PlayerCards(object):
 		elif len(self._piles['discard']) > 0:
 			self.recycle_discard_pile()
 			self.draw()
+	def get_card_from_pile(self, card, pile_name):
+		"""removes and returrns first instance of 'card' from pile_name.  Useful for trashing or discarding.
+		Returns the card if found, none if not"""
+		return self._piles[pile_name].pull_first_instance_of(card)
 	def put_card_on_pile(self, card, pile_name):
 		""" adds card to the top of pile with name pile_name """
 		self._piles[pile_name].add_card_to_pile(card)
@@ -101,18 +111,19 @@ class GameState(object):
 		self._player_order = None
 		self._turn_num = 0
 		self.reset_new_game(kingdom_cards, n_players);
-	def reset_new_games(self, kingdom_cards, n_players):
+	def reset_new_game(self, kingdom_cards, n_players):
 		# Set up supply
 		self._supply = Supply()
 		self._supply.set_pile('Copper',30)
 		self._supply.set_pile('Silver',30)
 		self._supply.set_pile('Gold',30)
+		self._supply.set_pile('Curse',30)
 		self._supply.set_pile('Estate',8 + 2 * (n_players - 2))
 		self._supply.set_pile('Duchy',8 + 2 * (n_players - 2))
 		self._supply.set_pile('Province',8 + 2 * (n_players - 2))
 		self._supply.set_pile('Trash',0)
 		for kingdom_card in kingdom_cards:
-			self._supply.set_pile(kingom_card,10)
+			self._supply.set_pile(kingdom_card,10)
 		# Set up player cards
 		self._players = []
 		for i in range(0,n_players):
@@ -124,20 +135,37 @@ class GameState(object):
 		self._turn_num = 0  # increments every turn.
 		# Set up history.  For now implemented as a list of strings.
 		self._history = ["Game Initialized"]
-	def current_player(self):
+	def list_supply_piles(self):
+		return [x for x in self._supply._piles.keys()]
+	def player_gains_card_from_supply(self, player_index = None, supply_pile_name = None, player_pile_name = "discard"):
+		if None == player_index:
+			player_index = self.current_player_index()
+		self._players[player_index].put_card_on_pile(self._supply.take_one("supply_pile_name"),player_pile_name)
+	def player_trashes_card(self, player_index = None, card_name = None, player_pile_name = "hand"):
+		if None == player_index:
+			player_index = current_player_index()
+		card = self._players[player_index].get_card_from_pile(card_name, player_pile_name)
+		self._supply.put_in_trash(card)
+	def increment_player(self):
+		self._turn_num += 1
+		self._history.append("Turn " + str(self._turn_num) + ".  Player " + str(self.current_player_index())) 
+	def current_player_index(self):
 		return self._player_order[self._turn_num % len(self._player_order)]
-	def next_player(self):
+	def next_player_index(self):
 		return self._player_order[(1 + self._turn_num) % len(self._player_order)]
-	def prev_player(self):
+	def prev_player_index(self):
 		return self._player_order[(-1 + self._turn_num) % len(self._player_order)]
-
+	def get_player(self, player_index = None):
+		if None == player_index:
+			player_index = self.current_player_index()
+		return self._players[player_index]
 
 ################ Definition Complete ###########
 
 
 # Testing.
 
-if __name__ == "__main__":
+if __name__ == "__main2__":
 
 	### Testing create player cards and shuffle
 	pc = PlayerCards()
@@ -209,8 +237,37 @@ if __name__ == "__main__":
 	else:
 		print "Player 2 wins!!"
 
-
-
+if __name__ == "__main__":
+	print """Repeat above game using gameState API."""
+	gameState = GameState()
+	print gameState.list_supply_piles()
+	gameState._supply.set_pile('Estate', 30)
+	gameState._supply.pretty_print()
+	thresh_to_buy_estate = [2,3]
+	while gameState._supply.count_pile('Estate') > 0:
+		print 'Turn: ' + str(gameState._turn_num)
+		player = gameState.get_player()
+		money = player.count_in_hand('Copper')
+		print ' "I am player ' + str(gameState.current_player_index() + 1)
+		print ' "I have ' + str(money) + ' dollars."',
+		if money >= thresh_to_buy_estate[gameState.current_player_index()]:
+			gameState.player_gains_card_from_supply(supply_pile_name = "Estate")
+			card = gameState._supply.take_one('Estate')
+		else:
+			gameState.player_gains_card_from_supply(supply_pile_name = "Copper")
+			card = gameState._supply.take_one('Copper')
+		print ' "I buy a ' + str(card) + '."'
+		player.put_card_on_pile(card, 'discard')
+		player.put_pile_in_other_pile('hand','discard')
+		player.put_pile_in_other_pile('in_play','discard')
+		player.draw_n(5)
+		gameState.increment_player()
+	print 'player 1 nVictory = ' + str(gameState._players[0].count_in_all('Estate'))
+	print 'player 2 nVictory = ' + str(gameState._players[1].count_in_all('Estate'))
+	if(gameState._players[0].count_in_all('Estate') > gameState._players[1].count_in_all('Estate')):
+		print "Player 1 wins!!"
+	else:
+		print "Player 2 wins!!"
 
 
 

@@ -42,6 +42,12 @@ class Pile(object):
 	def pop(self):
 		"returns a single card off the top of the deck"
 		return self._cards.pop()
+	def pull_first_instance_of(self, card_name):
+		"""removes first instance of 'card' from pile_name.  If there aren't any, returns None"""
+		for i, card in enumerate(self._cards):
+			if card_name == card._name:
+				return self._cards.pop(i)
+		return None
 	def shuffle(self):
 		"randomly reorders cards in pile"
 		shuffle(self._cards)
