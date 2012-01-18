@@ -1,2 +1,5 @@
 # ignore temp files created by emacs
 *~
+
+# compiled python code
+*.pyc
