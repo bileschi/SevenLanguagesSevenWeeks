@@ -1,15 +1,5 @@
 #!/usr/bin/env python
 
-"""
-Game State holds everything you would need to know to package up an existing Dominion game and start it again later.
-It does not hold anything about the logic of the game, or how players interact, that belongs elsewhere.
-The game state holds, enumerated
-1. The Supply:  The set of cards from which playsers may gain into their own hands / decks / discard 
-2. The PlayerCards:  Each PlayerCards object holds the state of all of the items which belong to a player, including
-which cards are in his deck, and in which order.  The cards on his discard, in his hand. etc.
-3. History:  The sequence of previous actions 
-4. Player Order: Which players turn is it and who will come next.  and then who.  and then who ...
-"""
 
 from cards import *
 from collections import Counter
@@ -103,6 +93,17 @@ class PlayerCards(object):
 		self._piles['discard'].pretty_print()
 
 class GameState(object):
+	"""
+	Game State holds everything you would need to know to package up an existing Dominion game and start it 
+	again later: so long as the game were paused between player turns.
+	It does not hold anything about the logic of the game, or how players interact, that belongs elsewhere.
+	The game state holds, enumerated
+	1. The Supply:  The set of cards from which playsers may gain into their own hands / decks / discard 
+	2. The PlayerCards:  Each PlayerCards object holds the state of all of the items which belong to a player, including
+	which cards are in his deck, and in which order.  The cards on his discard, in his hand. etc.
+	3. History:  The sequence of previous actions 
+	4. Player Order: Which players turn is it and who will come next.  and then who.  and then who ...
+	"""
 	default_kingdom_cards = ["Cellar", "Market", "Militia", "Mine",
 	 "Moat", "Remodel", "Smithy", "Village", "Woodcutter", "Workshop"]
 	def __init__(self, kingdom_cards = default_kingdom_cards, n_players = 2):
@@ -166,33 +167,33 @@ class GameState(object):
 # Testing.
 
 if __name__ == "__main__":
-	print """Repeat above game using gameState API."""
-	gameState = GameState()
-	print gameState.list_supply_piles()
-	gameState._supply.set_pile('Estate', 30)
-	gameState._supply.pretty_print()
+	print """Repeat game in some_tests.py using GameState API."""
+	my_game_state = GameState()
+	print my_game_state.list_supply_piles()
+	my_game_state._supply.set_pile('Estate', 30)
+	my_game_state._supply.pretty_print()
 	thresh_to_buy_estate = [2,3]
-	while gameState._supply.count_pile('Estate') > 0:
-		print 'Turn: ' + str(gameState._turn_num)
-		player = gameState.get_player()
+	while my_game_state._supply.count_pile('Estate') > 0:
+		print 'Turn: ' + str(my_game_state._turn_num)
+		player = my_game_state.get_player()
 		money = player.count_in_hand('Copper')
-		print ' "I am player ' + str(gameState.current_player_index() + 1)
+		print ' "I am player ' + str(my_game_state.current_player_index() + 1)
 		print ' "I have ' + str(money) + ' dollars."',
-		if money >= thresh_to_buy_estate[gameState.current_player_index()]:
-			gameState.player_gains_card_from_supply(supply_pile_name = "Estate")
-			card = gameState._supply.take_one('Estate')
+		if money >= thresh_to_buy_estate[my_game_state.current_player_index()]:
+			my_game_state.player_gains_card_from_supply(supply_pile_name = "Estate")
+			card = my_game_state._supply.take_one('Estate')
 		else:
-			gameState.player_gains_card_from_supply(supply_pile_name = "Copper")
-			card = gameState._supply.take_one('Copper')
+			my_game_state.player_gains_card_from_supply(supply_pile_name = "Copper")
+			card = my_game_state._supply.take_one('Copper')
 		print ' "I buy a ' + str(card) + '."'
 		player.put_card_on_pile(card, 'discard')
 		player.put_pile_in_other_pile('hand','discard')
 		player.put_pile_in_other_pile('in_play','discard')
 		player.draw_n(5)
-		gameState.increment_player()
-	print 'player 1 nVictory = ' + str(gameState._players[0].count_in_all('Estate'))
-	print 'player 2 nVictory = ' + str(gameState._players[1].count_in_all('Estate'))
-	if(gameState._players[0].count_in_all('Estate') > gameState._players[1].count_in_all('Estate')):
+		my_game_state.increment_player()
+	print 'player 1 nVictory = ' + str(my_game_state._players[0].count_in_all('Estate'))
+	print 'player 2 nVictory = ' + str(my_game_state._players[1].count_in_all('Estate'))
+	if(my_game_state._players[0].count_in_all('Estate') > my_game_state._players[1].count_in_all('Estate')):
 		print "Player 1 wins!!"
 	else:
 		print "Player 2 wins!!"
