@@ -43,13 +43,16 @@ class GameControler(object):
 		for seat in range(0,n_players):
 			self._player_seats[seat] = "command_line"
 		self._player_transients = PlayerTransients()
+	def get_player_hand(self):
+		return self._game_state.get_player_pile(pile_name='hand')
 	def print_player_status(self):
-		retStr =  "current player index is:\t" + str(self._game_state.current_player_index()) + "\n"
-		retStr += "current phase:\t" + self._player_transients.phase_name() + "\n"
-		retStr += "\tn_actions_left:\t" + str(self._player_transients.n_acts) + "\n"
-		retStr += "\tn_buys_left:\t" + str(self._player_transients.n_buys) + "\n"
-		retStr += "\tn_money:\t" + str(self._player_transients.n_money) + "\n"
-		return retStr
+		print  "current player index is:\t" + str(self._game_state.current_player_index())
+		print "current phase:\t" + self._player_transients.phase_name()
+		print "\tn_actions_left:\t" + str(self._player_transients.n_acts)
+		print  "\tn_buys_left:\t" + str(self._player_transients.n_buys)
+		print "\tn_money:\t" + str(self._player_transients.n_money)
+	def print_player_hand(self):
+		self.get_player_hand().pretty_print()
 		
 
 
@@ -62,5 +65,7 @@ if __name__=='__main__':
 	print my_game_controler
 	print len(my_game_controler._player_seats)
 	print my_game_controler._game_state.list_supply_piles()
-	print my_game_controler.print_player_status()
+	my_game_controler.print_player_status()
+	print '--- player hand ---'
+	my_game_controler.print_player_hand()
 

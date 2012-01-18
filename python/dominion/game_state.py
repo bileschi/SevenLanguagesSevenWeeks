@@ -91,6 +91,8 @@ class PlayerCards(object):
 		self._piles['hand'].pretty_print()
 		print "----Discard:---",
 		self._piles['discard'].pretty_print()
+	def get_pile(self, pile_name):
+		return self._piles[pile_name]
 
 class GameState(object):
 	"""
@@ -160,14 +162,17 @@ class GameState(object):
 		if None == player_index:
 			player_index = self.current_player_index()
 		return self._players[player_index]
-
+	def get_player_pile(self, player_index = None, pile_name = 'hand'):
+		if None == player_index:
+			player_index = self.current_player_index()
+		return self._players[player_index].get_pile(pile_name)
 ################ Definition Complete ###########
 
 
 # Testing.
 
 if __name__ == "__main__":
-	print """Repeat game in some_tests.py using GameState API."""
+	print """play a limited version of dominion with 2 card types using GameState API."""
 	my_game_state = GameState()
 	print my_game_state.list_supply_piles()
 	my_game_state._supply.set_pile('Estate', 30)
