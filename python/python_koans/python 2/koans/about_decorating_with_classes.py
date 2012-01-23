@@ -64,8 +64,8 @@ class AboutDecoratingWithClasses(Koan):
         # To clarify: the decorator above the function has no arguments, even
         # if the decorated function does
                 
-        self.assertEqual(__, self.foo())
-        self.assertEqual(__, self.parrot('pieces of eight'))
+        self.assertEqual('foo, foo', self.foo())
+        self.assertEqual('PIECES OF EIGHT, PIECES OF EIGHT', self.parrot('pieces of eight'))
 
     # ------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ class AboutDecoratingWithClasses(Koan):
         #wrap the function with the decorator
         self.sound_check = self.doubleit(self.sound_check)
         
-        self.assertEqual(__, self.sound_check())
+        self.assertEqual('Testing..., Testing...', self.sound_check())
 
     # ------------------------------------------------------------------
 
@@ -108,11 +108,11 @@ class AboutDecoratingWithClasses(Koan):
         pass
 
     def test_decorator_with_an_argument(self):
-        self.assertEqual(__, self.count_badly(2))
-        self.assertEqual(__, self.count_badly.__doc__)
+        self.assertEqual(5, self.count_badly(2))
+        self.assertEqual("Increments a value by one. Kind of.", self.count_badly.__doc__)
 
     def test_documentor_which_already_has_a_docstring(self):
-        self.assertEqual(__, self.idler.__doc__)
+        self.assertEqual('Idler: Does nothing', self.idler.__doc__)
 
     # ------------------------------------------------------------------
         
@@ -123,6 +123,6 @@ class AboutDecoratingWithClasses(Koan):
         return "D'oh"
 
     def test_we_can_chain_decorators(self):
-        self.assertEqual(__, self.homer())
-        self.assertEqual(__, self.homer.__doc__)
+        self.assertEqual("D'oh, D'oh, D'oh, D'oh", self.homer())
+        self.assertEqual("DOH!", self.homer.__doc__)
     
