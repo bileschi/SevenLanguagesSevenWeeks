@@ -13,24 +13,49 @@
 # missing handler and any other supporting methods.  The specification
 # of the Proxy class is given in the AboutProxyObjectProject koan.
 
-# Note: This is a bit trickier that it's Ruby Koans counterpart, but you
+# Note: This is a bit trickier that its Ruby Koans counterpart, but you
 # can do it!
 
 from runner.koan import *
+from collections import Counter
 
 class Proxy(object):
+
     def __init__(self, target_object):
         print 'initializing a proxy for ' + target_object.__class__.__name__
         # WRITE CODE HERE
-        
+        self._message_counts = Counter();
         #initialize '_obj' attribute last. Trust me on this!
         self._obj = target_object
 
     # WRITE CODE HERE                                   
-    def  __getattribute__(self, attr_name):
+    def  __getattr__(self, attr_name):
         print 'getting an attribute "' + attr_name + '" from "' + self._obj.__class__.__name__  + '"'
+        self._message_counts[attr_name] += 1
+        print self._message_counts
         return object.__getattribute__(self._obj, attr_name)
+
+    #def __getattribute__(self, attr_name):
+    #    print "intercepted!~ " + attr_name
+    #    object.__getattribute__(self, attr_name)
+
+    def __setattr__(self, attr_name, value):
+        if((attr_name == '_obj') | (attr_name == '_message_counts')): # special proxy attributes.
+            print 'setting the PROXY attribute:"' + attr_name 
+            object.__setattr__(self, attr_name, value)
+        else:
+            print 'setting the REAL attribute:"' + attr_name 
+            self._message_counts[attr_name+"="] += 1
+            object.__setattr__(self._obj, attr_name, value)
+
+    def messages(self):
+        return self._message_counts.keys()
     
+    def number_of_times_called(self, attr_name):
+        return self._message_counts[attr_name]
+
+    def was_called(self, attr_name):
+        return attr_name in self._message_counts
 
 # The proxy object should pass the following Koan:
 #
@@ -46,15 +71,16 @@ class AboutProxyObjectProject(Koan):
         
         tv.channel = 10
         tv.power()
-        
         self.assertEqual(10, tv.channel)
+        
         self.assertTrue(tv.is_on())
     
     def test_proxy_records_messages_sent_to_tv(self):
+        print "test started"
         tv = Proxy(Television())
         
-        tv.power()
         tv.channel = 10
+        tv.power()
         
         self.assertEqual(['power', 'channel='], tv.messages())
     
@@ -80,6 +106,7 @@ class AboutProxyObjectProject(Koan):
         self.assertFalse(tv.was_called('channel'))
     
     def test_proxy_counts_method_calls(self):
+        print 6
         tv = Proxy(Television())
         
         tv.power()
@@ -91,6 +118,7 @@ class AboutProxyObjectProject(Koan):
         self.assertEqual(0, tv.number_of_times_called('is_on'))
     
     def test_proxy_can_record_more_than_just_tv_objects(self):
+        print 7
         proxy = Proxy("Py Ohio 2010")
       
         result = proxy.upper()
@@ -114,10 +142,12 @@ class Television(object):
         
     @property
     def channel(self):
+        print "TV CHANNEL ACCESS"
         return self._channel
 
     @channel.setter
     def channel(self, value):
+        print "CHANGING THE CHANNEL"
         self._channel = value        
         
     def power(self):
