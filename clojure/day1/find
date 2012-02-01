@@ -1,0 +1,15 @@
+About clojure sequences:
+http://clojure.org/sequences
+
+Some sequence code examples from IBM:
+http://www.ibm.com/developerworks/opensource/library/os-eclipse-clojure/
+
+Definition of a clojure function:
+http://clojure.org/special_forms#Special Forms--(fn name? [params* ] exprs*)
+
+Invoking the REPL in my environment?
+The easiest way to invoke the REPL is to use the web-based repl at:
+http://tryclj.com/
+
+Ok, that's cheating.  How do I run the REPL if I just have it installed on my laptop?
+
