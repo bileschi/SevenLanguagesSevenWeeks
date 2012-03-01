@@ -1,0 +1,29 @@
+-- find
+Q. implementations of some commonly used macros:
+
+A. Many of the definitions of clojure macros are found in the clojure source.  It is not hard to find some interesting macros in this file:
+https://github.com/clojure/clojure/blob/master/src/clj/clojure/core.clj
+for instance, see the definitions of:
+when, when-not, cond, if-not, ec.
+
+
+Q. an example of defnining your own lazy sequnce:
+
+A. Also in the same file you can find some examples of lazy squences being generated with the lazy-seq macro.  See for instance the definition of:
+(defn cycle
+  "Returns a lazy (infinite!) sequence of repetitions of the items in coll."
+  {:added "1.0"
+   :static true}
+  [coll] (lazy-seq 
+          (when-let [s (seq coll)] 
+              (concat s (cycle s)))))
+An example of a lazy sequence not from the clojure source:
+http://stackoverflow.com/questions/1587412/lazy-infinite-sequences-in-clojure-and-python
+
+
+Q. the current status of defrecord and protocol
+
+A. Still in 'alpha' status
+http://clojure.github.com/clojure/clojure.core-api.html#clojure.core/defrecord
+http://clojure.org/protocols
+
