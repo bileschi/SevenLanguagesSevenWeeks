@@ -1,0 +1,8 @@
+-- find
+implementations of somec commonly used macros
+an example of defnining your own lazy sequnce
+the current status of defrecord and protocol
+
+-- do
+write an unless macro with else
+write a type with defrecord that implements a protocol
