@@ -156,3 +156,7 @@ card_prototypes['workshop'] = card_prototype_data(
 	is_action = True,
 	purchase_cost = 3
 )
+
+def test_prototype_exists():
+    assert len(card_prototypes) > 0
+
