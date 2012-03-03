@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from game_state import GameState
+import terminal_view
 
 class PlayerTransients(object):
 	"""
@@ -24,6 +25,17 @@ class PlayerTransients(object):
 		return self.i_phase == len(turn_phases)
 
 
+class PlayerSeat(object):
+	"""
+	Controls input and output for a given player.  
+	A player seat defines where the controler should turn to hear player moves 
+	or display player related information.
+	"""
+	def __init__(self, player_input = None, player_output = None):
+		self.player_input = player_input;
+		self.player_output = player_output;
+
+
 class GameControler(object):
 	"""
 	Game Controler manages the dynamics and rules of the dominion game.  
@@ -41,10 +53,19 @@ class GameControler(object):
 		#initialize player seats to all command line interface
 		self._player_seats = {}
 		for seat in range(0,n_players):
-			self._player_seats[seat] = "command_line"
+			self._player_seats[seat] = PlayerSeat("terminal", "terminal")
 		self._player_transients = PlayerTransients()
 	def get_player_hand(self):
 		return self._game_state.get_player_pile(pile_name='hand')
+	def display_game_status(self):
+		# get view for player.
+		player = self._game_state.get_player()
+		player_index = self._game_state.current_player_index();
+		player_output = self._player_seats[player_index];
+		if(player_output == "command_line"):
+			TerminalView.pretty_print_supply(game_state)
+			TerminalView.pretty_player_hand(game_state)
+
 	def print_player_status(self):
 		print  "current player index is:\t" + str(self._game_state.current_player_index())
 		print "current phase:\t" + self._player_transients.phase_name()
@@ -63,8 +84,9 @@ if __name__=='__main__':
 	print 'I am game controler'
 	my_game_controler = GameControler()
 	print my_game_controler
-	print len(my_game_controler._player_seats)
+	print 'there are ' + str(len(my_game_controler._player_seats)) + 'players'
 	print my_game_controler._game_state.list_supply_piles()
+	print my_game_controler.display_game_status()
 	my_game_controler.print_player_status()
 	print '--- player hand ---'
 	my_game_controler.print_player_hand()

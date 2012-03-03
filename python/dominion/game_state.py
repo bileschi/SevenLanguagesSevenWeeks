@@ -166,6 +166,8 @@ class GameState(object):
 		if None == player_index:
 			player_index = self.current_player_index()
 		return self._players[player_index].get_pile(pile_name)
+	def get_supply(self):
+		return self._supply
 ################ Definition Complete ###########
 
 

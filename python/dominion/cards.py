@@ -3,10 +3,22 @@
 # classes for card and pile
 # a pile is an ordered collection of cards with an easy shuffling operation
 from random import shuffle
-import pdb
+
 class Card(object):
 	def __init__(self, name):
 		self._name = name
+		# card types
+		self._is_treasure = False;
+		self._is_action = False;
+		self._is_victory = False;
+		self._is_curse = False;
+		# card types
+		self._purchase_cost = 0;
+		# card effects
+		self._value_from_treasure = 0; # money gained from playing during treasure phase
+		self._value_from_act = 0; # money gained from play during action phase
+		self._act_from_act = 0;   # actions gained from play during action phase
+		self._cards_from_act = 0;   # cards gained from play during action phase
 	def __str__(self):
 		return self._name
 
