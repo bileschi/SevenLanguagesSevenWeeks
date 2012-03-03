@@ -21,3 +21,9 @@
 ;; :map
 ;; user=> (collection-type collection-type)
 ;; :not-list-map-or-vector
+
+(collection-type ())
+(collection-type [])
+(collection-type {})
+(collection-type collection-type)
+
