@@ -4,10 +4,14 @@ from card_prototypes import card_prototypes
 
 class Card(object):
 	def __init__(self, name):
-		self._name = name
+		self.name = name
 		self._properties = card_prototypes[name];
 	def __str__(self):
-		return self._name
+		return self.name
+	def __eq__(self, other):
+		if isinstance(other, Card):
+			return self.name == other.name
+		return NotImplemented
 	def is_treasure(self):
 		return self._properties.is_treasure
 	def is_action(self):
@@ -16,6 +20,8 @@ class Card(object):
 		return self._properties.is_victory
 	def is_curse(self):
 		return self._properties.is_curse
+	def has_name(self, name):
+		return self.name == name
 
 ################ Unit Tests ###########
 
@@ -38,6 +44,15 @@ def test_referencing_properties():
 	for card_name in card_prototypes.keys():
 		card = Card(card_name)
 		assert(type(card._properties).__name__ ==  'card_prototype_data') 
+
+def test_card_equality():
+	assert(Card('gold') == Card('gold'))
+	assert(Card('gold') != Card('copper'))
+
+
+def test_card_has_name():
+	assert(Card('gold').has_name('gold'))
+	assert(not Card('gold').has_name('copper'))
 
 ################ Usage Examples ###########
 
