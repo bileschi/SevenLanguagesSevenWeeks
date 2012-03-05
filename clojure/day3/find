@@ -1,0 +1,7 @@
+find a queue implementation that blocks when the queue is empty and waits for a new item in the queue
+https://github.com/richhickey/clojure-contrib/blob/95dddbbdd748b0cc6d9c8486b8388836e6418848/src/main/clojure/clojure/contrib/seq_utils.clj#L189
+
+
+use refs to create a vector of accounts in memory.  Create debit and credit functions to change the value of an account.
+
+Implement 'sleeping barber'.
