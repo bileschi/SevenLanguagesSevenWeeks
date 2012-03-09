@@ -1,0 +1,21 @@
+Find: 
+*The Haskell wiki
+*A Haskell online group supporting your compilier of choise
+
+Do:
+*How many different ways can you find to write allEven?
+*Write a function that takes a list and returns the same list in reverse
+*Write a functio that builds two-tuples witha ll possible combinations of the colors, black, white, blue, yellow, and red.  Note that you should only include one of (blue, black) and (black, blue)
+*Write a list comprehension to build a childhood multiplication table.  The table would be a list of three-tuples where the first two are integers from 1-12 and the third is the product of the first two.
+*Solve the map-coloring problem using Haskell
+
+Map coloring = three colors
+5 states
+no two adjacent states have the same color
+Ten:Mis
+Ten:Ala
+Ten:Geo
+Mis:Ala
+Ala:Geo
+Ala:Flo
+Geo:Flo
