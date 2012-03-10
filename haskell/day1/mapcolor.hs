@@ -17,6 +17,8 @@ colors = [
  "GREEN",
  "BLUE"]
 
+
+-- adjacent states is not currently used.
 adjacent_states = [
  ("Tennesee","Mississippi"),
  ("Tennesee","Alabama"),
