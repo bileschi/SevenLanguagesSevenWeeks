@@ -69,6 +69,12 @@ filter_constraints ((Nothing, _):rest) = filter_constraints rest
 filter_constraints ((_, Nothing):rest) = filter_constraints rest
 filter_constraints ((Just a, Just b):rest) = (a,b):(filter_constraints rest)
 
+my_colors' = [ [c1, c2, c3, c4, c5] |
+	c1 <- colors, c2 <- colors, c3 <- colors, c4 <- colors, c5 <- colors,
+	check_elements_neq [c1, c2, c3, c4, c5] (filter_constraints (index_constraints states adjacent_states))]
+
+
+color_states' = zip states (head my_colors')
 
 
 
