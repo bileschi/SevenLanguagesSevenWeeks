@@ -1,0 +1,27 @@
+Find:
+* Functions that you can use on lists, strings, or tuples
+* A way to sort lists
+
+The best way to find Haskell library functions is with Hoogle:
+http://www.haskell.org/hoogle/
+
+Here is the response to the query "sort"
+http://hackage.haskell.org/packages/archive/base/latest/doc/html/Data-List.html#v:sort
+
+It even includes source code and a link to the "sortBy" function
+http://hackage.haskell.org/packages/archive/base/latest/doc/html/src/Data-List.html#sort
+
+To be a sport, here some functions that operate on lists 
+
+[a] -> a
+head
+last
+foldl1
+find
+
+[a] -> [a]
+cycle
+init
+reverse
+tail
+
