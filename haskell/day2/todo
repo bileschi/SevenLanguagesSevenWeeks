@@ -1,0 +1,16 @@
+Find:
+* Functions that you can use on lists, strings, or tuples
+* A way to sort lists
+
+Do:
+* Write a sort that takes a list and returns a sorted list
+* Write a sort that takes a list and a function that compares its two arguments and then returns a sorted list
+* Write a Haskell function to convert a string to a anumber.  The string should be in the form $2,345,678.99 and can possibly have leading zeroes
+* Write a function taht takes an argument x and returns a lazy sequency that has every third number, starting with x.  Then, write a function that includes every fifth number, beginning with y.  Combine these functions through composition to return every 8th number, beginning with x+y
+* Use a partially applied function to define a function that will return half of a number and another that will append \n to the end of any string.
+
+Do if you dare:
+* Write a function to determine the greatest common denominator of two integers.
+* Create a lazy sequency of prime numbers.
+* Break a long string into individual lines at proper word boundaries.
+*To the above excercise, add functions to left, right, and fully justify the text wtih spaces (making both margins straight)
