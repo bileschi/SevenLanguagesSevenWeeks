@@ -1,5 +1,5 @@
 ;; testing defprotocol and defrecord
-;; with a silly, record with that describes a stack of blocks
+;; with a silly record with that describes a stack of blocks
 ;; block piles can only be 3 blocks high and minimum of 0 blocks
 
 (defprotocol DiscreetPile
