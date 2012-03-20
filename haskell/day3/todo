@@ -1,0 +1,24 @@
+Find: 
+* A few monad tutorials
+-- http://en.wikipedia.org/wiki/Monad_(functional_programming)
+-- http://web.cecs.pdx.edu/~antoy/Courses/TPFLP/lectures/MONADS/Noel/research/monads.html
+-- http://www.haskell.org/haskellwiki/Monad
+-- +++ http://www.haskell.org/haskellwiki/Tutorials#Using_monads +++ lots....
+
+* A list of the monads in Haskell
+Most common applications of monads include:
+
+Representing failure using Maybe monad
+Nondeterminism using List monad to represent carrying multiple values
+State using State monad
+Read-only environment using Reader monad
+I/O using IO monad
+
+* Build a function that looks up a hash table value using the Maybe monad.  Write a hash that stores other hashes, several layers deep.  Use the maybe monad to return a value from the hash several layers deep.
+
+* Represent a maze in Haskell.  You'll need a Maze type and a Node tpye, as well as a function to return a node given its coordinates.  The node should have a list of exits to other nodes.
+
+* Use a List monad to solve the maze.
+
+* Implement a monad in a non functional language 
+( see http://moonbase.rydia.net/mental/writings/programming/monads-in-ruby/00introduction.html)
