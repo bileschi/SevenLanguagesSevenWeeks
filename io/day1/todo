@@ -5,10 +5,42 @@ find:
 
 Answer: 
 * evaluate 1 + 1 and 1 + "one".  Is Io strongly typed?
-* Is 0 true or false?  what about ""? what about nil? 
+
+Well, the if statement allows you to predicate on things that are not boolean, so theres some leniency there.  Also, objects, given a message corresponding to a missing slot, will simply pass that message along, in a manner similar to inheritance.
+
+* Is 0 true or false?  what about ""? what about nil?
+0 is true, nil is false, "" is true.
+
 * How can you tell which slots a prototype supports
+just type in the name of the prototype
+Io> Vehicle
+==>  Vehicle_0x32a450:
+  description      = "path"
+  type             = "Vehicle"
+
+
 * What is the difference between "=" ":=" and "::=" syntactically in Io?
+From: http://www.iolanguage.com/scm/io/docs/IoGuide.html#Syntax-Expressions
+
+Assignment
+
+Io has three assignment operators:
+operator	 action
+::=	 Creates slot, creates setter, assigns value
+:=	 Creates slot, assigns value
+=	 Assigns value to slot if it exists, otherwise raises exception
+These operators are compiled to normal messages whose methods can be overridden. For example:
+
+source	 compiles to
+a ::= 1	 newSlot("a", 1)
+a := 1	 setSlot("a", 1)
+a = 1	 updateSlot("a", 1)
+On Locals objects, updateSlot is overridden so it will update the slot in the object in which the method was activated if the slot is not found the locals. This is done so update assignments in methods don't require self to be an explicit target.
+
 
 Do: 
 Run an Io program from a file.
+that's easy:  'io filename'
+
 Execute code from an object slot given its name
+see the file 'a_program.io'
