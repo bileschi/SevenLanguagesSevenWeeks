@@ -1,0 +1,14 @@
+find:
+* some example io problems
+*  an io community that will answer questions
+* a style guide with io idioms
+
+Answer: 
+* evaluate 1 + 1 and 1 + "one".  Is Io strongly typed?
+* Is 0 true or false?  what about ""? what about nil? 
+* How can you tell which slots a prototype supports
+* What is the difference between "=" ":=" and "::=" syntactically in Io?
+
+Do: 
+Run an Io program from a file.
+Execute code from an object slot given its name
