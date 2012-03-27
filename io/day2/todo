@@ -1,2 +1,8 @@
 * Write a fibonacci seq generator.
-* Modify '/' to handle div by zero
+* Modify '/' to handle div by zero.  Return 0.
+* Write a program to add up all the numbers in a two dimensional array
+* Add a slot called myAverage to a List which computes the average of all numbers in the list. Bonus: raise an exception if something in the list is not a number
+* Write a prototype for a two dimensional list.  The dim(x,y) method should allocate space for a list of y lists of length x.  set(x,y) should set a value and get(x,y) should return that value.
+* Write a transpose method on the two dim list
+* Write a matrix to a file and read a matrix from a file
+* Write a program that gives you 10 tries to guess a number between 1 and 100.
