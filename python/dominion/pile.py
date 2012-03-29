@@ -102,9 +102,13 @@ class Pile(object):
 		return top_n_cards
 
 	def pretty_print(self):
-		print str(self)
+		print self.pretty_str()
+
+	def pretty_str(self):
+		outstr = str(self) + "\n"
 		for card in self._cards:
-			print card
+			outstr +=  str(card) + "\n"
+		return outstr
 
 ########################################
 ############# Unit Tests ###############
@@ -168,8 +172,9 @@ def test_shuffle():
 	assert(p.count_specific_card('gold') == 64)
 
 def test_take_top_n():
-	p = Pile(['copper','silver','gold'])
+	p = Pile.build_from_list(['copper','silver','gold'])
 	top_2 = p.take_top_n(2)
+	print "top 2 :=" + str(top_2)
 	assert(top_2[0] == Card('silver'))
 	assert(top_2[1] == Card('gold'))
 
