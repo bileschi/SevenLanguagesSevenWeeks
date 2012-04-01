@@ -80,6 +80,12 @@ class Pile(object):
 		""" removes all cards from this pile """
 		self._cards = []
 
+	def peek(self, n = 1):
+		"""returns a list of <= n card names, in order, in this pile.  
+		list will contain min(len(pile), n)"""
+		n = min(n, len(self))
+		return [str(c) for c in self._cards[-n:]]
+
 	def pop(self):
 		"returns a single card off the top of the deck"
 		return self._cards.pop()
@@ -177,6 +183,16 @@ def test_take_top_n():
 	print "top 2 :=" + str(top_2)
 	assert(top_2[0] == Card('silver'))
 	assert(top_2[1] == Card('gold'))
+	assert(len(p) == 1)
+
+def test_peek_n():
+	p = Pile.build_from_list(['copper','silver','gold'])
+	top_2 = p.peek(2)
+	top_3 = p.peek(10)
+	assert(len(top_2) == 2)
+	assert(len(top_3) == 3)
+	assert(top_2[0] == 'silver')
+	assert(top_2[1] == 'gold')
 
 
 ########################################

@@ -22,18 +22,21 @@ class PlayerCards(object):
 		""" returns a count of the number of cards with 
 		name == card_name in player's deck.  Useful for counting
 		the number of victory cards at the end of the game."""
-		return sum([self._piles[pilename].count_specific_card(card_name) 
-			for pilename in self._piles.keys()])
+		return sum([self._piles[pile_name].count_specific_card(card_name) 
+			for pile_name in self._piles.keys()])
 
 	def count_in_hand(self, card_name=None):
+		return self.count_in_pile(card_name, pile_name='hand')
+
+	def count_in_pile(self, card_name=None, pile_name='hand'):
 		""" if card_name is defined: returns a count of the 
-		number of cards of type card_name in player's hand.
-		if card_name is None: returns a count of the cards in the
-		hand, without regard to card type """
+		number of cards of type card_name in player's associated pile.
+		if card_name is None: returns a count of all the cards in the
+		pile, without regard to card type """
 		if (card_name is None):
-			return len(self._piles['hand'])
+			return len(self._piles[pile_name])
 		else:
-			return self._piles['hand'].count_specific_card(card_name)
+			return self._piles[pile_name].count_specific_card(card_name)
 
 	def draw_n(self, n):
 		for i in range(0,n):
@@ -98,3 +101,69 @@ class PlayerCards(object):
 
 	def get_pile(self, pile_name):
 		return self._piles[pile_name]
+
+########################################
+############# Unit Tests ###############
+########################################
+
+expected_piles = ['deck', 'hand', 'discard', 'in_play']
+
+def test_new_playerCards_has_correct_piles():
+	pc = PlayerCards();
+	assert(pc._piles is not None)
+	assert(len(pc._piles) == len(expected_piles))
+	assert(pc._piles.has_key(x) for x in expected_piles)
+
+def test_reset_new_game():
+	pc = PlayerCards()
+	pc.reset_new_game()
+	assert(pc.count_in_all('copper') == 7)
+	assert(pc.count_in_all('estate') == 3)
+	assert(pc.count_in_hand() == 5)
+	assert(pc.count_in_hand('copper') <= 5)
+	assert(pc.count_in_hand('estate') <= 3)
+
+def test_draw():
+	pc = PlayerCards()
+	pc.reset_new_game()
+	pc.get_pile('deck').add_new_card_to_pile('gold')
+	pc.draw()
+	assert(pc.count_in_pile('gold') == 1)
+	assert(pc.count_in_pile() == 6)
+	assert(len(pc._piles['deck']) == 5)
+
+def test_get_card_from_pile():
+	pc = PlayerCards()
+	pc.reset_new_game()
+	c = pc.get_card_from_pile('copper', 'deck')
+	print c
+	assert(c == Card('copper'))
+	c = pc.get_card_from_pile('gold', 'deck')
+	assert(c is None)
+
+def test_put_card_on_pile():
+	pc = PlayerCards()
+	pc.put_card_on_pile(Card('gold'), 'hand')
+	assert(pc.count_in_hand() == 1)
+	assert(pc.count_in_hand('gold') == 1)
+	pc.put_pile_in_other_pile('hand', 'discard')
+	assert(pc.count_in_hand('gold') == 0)
+	assert(pc.count_in_pile(card_name='gold', pile_name='discard') == 1)
+
+def test_recycle():
+	pc = PlayerCards()
+	pc.put_card_on_pile(Card('gold'), 'discard')
+	pc.put_card_on_pile(Card('silver'), 'discard')
+	pc.recycle_discard_pile()
+	assert(pc.count_in_pile(card_name='gold', pile_name='deck') == 1)
+	assert(pc.count_in_pile(card_name='silver', pile_name='deck') == 1)
+
+
+
+
+
+
+
+
+
+
