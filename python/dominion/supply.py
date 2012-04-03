@@ -16,6 +16,9 @@ class Supply(object):
 	def __str__(self):
 		return self.pretty_str()
 
+	def has_pile(self, pile_name):
+		return pile_name in self._piles
+
 	def count_pile(self, pile_name):
 		if self._piles.has_key(pile_name):
 			return len(self._piles[pile_name])
