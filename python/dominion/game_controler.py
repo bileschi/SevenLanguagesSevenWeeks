@@ -1,78 +1,53 @@
 #!/usr/bin/env python
 
 from game_state import GameState
+from player_transients import PlayerTransients
 import terminal_view
-
-class PlayerTransients(object):
-	"""
-	Player transients holds information about a player that is only useful during the duration
-	of a turn.  State that persists after the end of a turn belongs in the GameState.
-	"""
-	turn_phases = ["Action", "Treasure", "Buy"]
-	def __init__(self):
-		self.reset_new_turn()
-	def reset_new_turn(self):
-		self.n_buys = 1;
-		self.n_acts = 1;
-		self.n_money = 0;
-		self.i_phase = 0;
-	def phase_name(self):
-		try:
-			return self.turn_phases[self.i_phase]
-		except IndexError, e:
-			return "Done"
-	def player_is_done(self):
-		return self.i_phase == len(turn_phases)
-
-
-class PlayerSeat(object):
-	"""
-	Controls input and output for a given player.  
-	A player seat defines where the controler should turn to hear player moves 
-	or display player related information.
-	"""
-	def __init__(self, player_input = None, player_output = None):
-		self.player_input = player_input;
-		self.player_output = player_output;
-
 
 class GameControler(object):
 	"""
 	Game Controler manages the dynamics and rules of the dominion game.  
 	It connects to an instance of a game state, which it is responsible
-	for twiddiling, according to the rules, and input from the players.
-	The players connect to the Game controler through instances of
-	PlayerSeats.  These are control points to which a player my connect / 
+	for twiddiling, according to the rules and input from the players.
+	The players connect to the Game controler through the player_seats
+	instance dict.  These are control points to which a player may connect / 
 	disconnect.  Finally, the game controler also holds an instance of a 
 	query interface.   This allows the game controler to respond to requsts
 	regarding game state from the players.
 	"""
+
 	def __init__(self, game_state = None, n_players = 2):
 		#'create a new game state if the input is None'
 		self._game_state = game_state or GameState()
 		#initialize player seats to all command line interface
-		self._player_seats = {}
+		self._player_seats = []
 		for seat in range(0,n_players):
-			self._player_seats[seat] = PlayerSeat("terminal", "terminal")
+			ps = {}
+			ps['input'] = 'local_terminal_input'
+			ps['output'] = 'local_terminal_output'
+			sel._player_seats.append(ps)
 		self._player_transients = PlayerTransients()
+
 	def get_player_hand(self):
 		return self._game_state.get_player_pile(pile_name='hand')
+
 	def display_game_status(self):
 		# get view for player.
 		player = self._game_state.get_player()
 		player_index = self._game_state.current_player_index();
 		player_output = self._player_seats[player_index];
 		if(player_output == "command_line"):
-			TerminalView.pretty_print_supply(game_state)
-			TerminalView.pretty_player_hand(game_state)
+			print TerminalView.supply_pretty_str(game_state)
+			print TerminalView.pretty_print_player_hand(game_state)
 
-	def print_player_status(self):
+	def player_status_str(self):
 		print  "current player index is:\t" + str(self._game_state.current_player_index())
 		print "current phase:\t" + self._player_transients.phase_name()
 		print "\tn_actions_left:\t" + str(self._player_transients.n_acts)
-		print  "\tn_buys_left:\t" + str(self._player_transients.n_buys)
+		print "\tn_buys_left:\t" + str(self._player_transients.n_buys)
 		print "\tn_money:\t" + str(self._player_transients.n_money)
-	def print_player_hand(self):
+
+	def player_hand_str(self):
 		self.get_player_hand().pretty_print()
 		
 

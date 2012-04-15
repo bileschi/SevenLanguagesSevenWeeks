@@ -31,27 +31,38 @@ class GameState(object):
 
 	default_kingdom_cards = ["cellar", "market", "militia", "mine",
 	 "moat", "remodel", "smithy", "village", "woodcutter", "workshop"]
+	default_treasure_cards = ['copper',  'silver', 'gold']
+	default_victory_cards = ['estate',  'duchy', 'province']
 
-	def __init__(self, kingdom_cards = default_kingdom_cards, n_players = 2):
+	def __init__(self,
+	 kingdom_cards = default_kingdom_cards,
+	 treasure_cards = default_treasure_cards,
+	 victory_cards = default_victory_cards,
+	 n_players = 2):
 		self._supply = None
 		self._player_cards = None
 		self._player_order = None
 		self._turn_num = 0
-		self.reset_new_game(kingdom_cards, n_players);
+		self.reset_new_game(n_players, kingdom_cards);
 
-	def reset_new_game(self, kingdom_cards, n_players):
+	def __str__(self):
+		return self.pretty_str()
+
+	def reset_new_game(self,
+	 n_players,
+	 kingdom_cards = default_kingdom_cards,
+	 treasure_cards = default_treasure_cards,
+	 victory_cards = default_victory_cards):
 		# Set up supply
 		self._supply = Supply()
-		self._supply.set_pile('copper',30)
-		self._supply.set_pile('silver',30)
-		self._supply.set_pile('gold',30)
+		for card_name in treasure_cards:
+			self._supply.set_pile(card_name, 30)
+		for card_name in victory_cards:
+			self._supply.set_pile(card_name, 4 + 2 * n_players)
+		for card_name in kingdom_cards:
+			self._supply.set_pile(card_name, 10)
 		self._supply.set_pile('curse',30)
-		self._supply.set_pile('estate',8 + 2 * (n_players - 2))
-		self._supply.set_pile('duchy',8 + 2 * (n_players - 2))
-		self._supply.set_pile('province',8 + 2 * (n_players - 2))
 		self._supply.set_pile('trash',0)
-		for kingdom_card in kingdom_cards:
-			self._supply.set_pile(kingdom_card,10)
 		# Set up player cards
 		self._player_cards = []
 		for i in range(0,n_players):
@@ -95,7 +106,7 @@ class GameState(object):
 		""" card is removed from players cards, and put atop trash pile.
 		which player defaults to current player """
 		if None == player_index:
-			player_index = current_player_index()
+			player_index = self.current_player_index()
 		card = self._player_cards[player_index].get_card_from_pile(
 			card_name, player_pile_name)
 		self._supply.put_in_trash(card)
@@ -128,6 +139,21 @@ class GameState(object):
 
 	def get_supply(self):
 		return self._supply
+
+	def pretty_str(self):
+		strs = []
+		strs.append("Game State Supply:")
+		strs.append(str(self._supply.pretty_str()))
+		strs.append("Game State Player_card List:")
+		for i, pc in enumerate(self._player_cards):
+			strs.append( "player %d" % i)
+			strs.append(str(pc.pretty_str()))
+		strs.append("Game State Player Order:")
+		strs.append(str(self._player_order))
+		strs.append("Game State Turn Num:")
+		strs.append(str(self._turn_num))
+		return "\n".join(strs)
+
 ################ Definition Complete ###########
 
 ########################################
@@ -157,6 +183,43 @@ def test_init_game_state():
 	assert(gs.next_player_index() == 1)
 	assert(gs.prev_player_index() == 1)
 
+def test_list_piles():
+	gs = GameState()
+	l = gs.list_supply_piles()
+	d = set()
+	for p in l:
+		d.add(p)
+	for p in GameState.default_kingdom_cards:
+		assert p in d
+
+def test_player_gains_card_from_suply():
+	gs = GameState()
+	assert(gs.current_player_index() == 0)
+	gs.player_gains_card_from_supply(supply_pile_name = 'gold', player_pile_name='hand')
+	assert(gs.get_player().count_in_pile(pile_name='hand') == 6)
+	assert(gs.get_player().count_in_pile(card_name='gold', pile_name='hand') == 1)
+
+def test_player_trashes_card():
+	gs = GameState()
+	assert(gs.current_player_index() == 0)
+	gs.player_gains_card_from_supply(supply_pile_name = 'curse', player_pile_name='hand')
+	gs.player_trashes_card(card_name = 'curse', player_pile_name = 'hand')
+	print str(gs)
+	assert(gs.get_player().count_in_pile(pile_name='hand') == 5)
+	assert(gs.get_player().count_in_pile(card_name='curse', pile_name='hand') == 0)
+	assert(gs.supply_count_pile(pile_name='curse') == 29)
+	assert(gs.supply_count_pile(pile_name='trash') == 1)
+
+def test_increment_player():
+	gs = GameState(n_players = 3)
+	assert(gs.current_player_index() == 0)
+	assert(gs.prev_player_index() == 2)
+	assert(gs.next_player_index() == 1)
+	gs.increment_player()
+	assert(gs.current_player_index() == 1)
+	assert(gs.prev_player_index() == 0)
+	assert(gs.next_player_index() == 2)
+	
 
 # Testing.
 

@@ -45,16 +45,22 @@ class Supply(object):
 		return outstr
 
 	def put_in_trash(self, card):
-		if "Trash" not in self._piles:
-			self._piles["Trash"] = Pile()
-		self._piles["Trash"].add_card_to_pile(card)
+		if "trash" not in self._piles:
+			self._piles["trash"] = Pile()
+		self._piles["trash"].add_card_to_pile(card)
 
 	def count_empty_piles(self):
 		"""returns number of empty piles not counting trash"""
 		n = 0
 		for pile_name, p in self._piles.iteritems():
-			if (len(p) == 0) & (pile_name != "Trash"): n += 1
+			if (len(p) == 0) & (pile_name != "trash"): n += 1
 		return n
+
+	def pretty_str(self):
+		a = []
+		for (p_name, p) in self._piles.iteritems():
+			a.append("Pile: '%s' contains %d cards." % (p_name, len(p)))
+		return "\n".join(a)
 
 ########################################
 ############# Unit Tests ###############
