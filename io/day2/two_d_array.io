@@ -23,4 +23,9 @@ My2dList get := method(m, n,
 	self data at(m) at(n)
 )
 
-ll = My2dList clone
+My2dList set := method(m, n, v,
+	self data at(m) atPut(n,v)
+)
+
+ll := My2dList clone
+print ll
