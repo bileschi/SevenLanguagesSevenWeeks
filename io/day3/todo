@@ -1,0 +1,5 @@
+enhance the xml program to show the indentation structure
+
+create a list syntax that uses brackets
+
+enhance the xml program to handle attributes.  For instance book({author:'tate'}) would print <book author='tate'>
