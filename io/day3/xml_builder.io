@@ -39,21 +39,42 @@ XML_Builder2 ul(
 # --------------------- Builder3 handles attributes
 #--------For instance book({author:'tate'}) would print <book author='tate'>
 writeln("-----------------------")
+
+
 XML_Builder3 := Object clone
 XML_Builder3 ind ::= 0
+
+XML_Builder3 curlyBrackets := method(
+  r := Map clone
+  s := ""
+  is_first := true
+  call message arguments foreach(arg,
+    toks := arg asString split(":")
+    if(is_first not, s := s .. ",")
+    s := s .. toks at(0)
+    s := s .. "="
+    s := s .. toks at(1)
+    is_first := false)
+  s
+)
+
 XML_Builder3 forward := method(
     ind_proto := ". "
     ind_str := (ind_proto repeated(self ind))
     msg_name := call message name
     msg_attrbs := ""
     args := call message arguments
+    msg_attrbs_call := "{}"
     if(args size > 0,
       first_arg := args at(0)
       if(first_arg name == "curlyBrackets",
-        msg_attrbs := args removeAt(0)
+        msg_attrbs_call := args removeAt(0)
+        msg_attrbs := self doMessage(msg_attrbs_call)
+        r := Map clone
+        r asList asString
       )
     )
-    writeln (ind_str, "<", msg_name, " ", msg_attrbs, ">")
+    writeln (ind_str, "<", msg_name, " ",  msg_attrbs, ">")
     self setInd(self ind + 1)
     args foreach(arg,
         content := self doMessage( arg);
