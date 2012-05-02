@@ -1,0 +1,9 @@
+wrote(dfw, infinite_jest).
+wrote(dfw, everything_and_more).
+wrote(dfw, pale_king).
+wrote(dfw, supposedly_fun_thing).
+wrote(king, night_shift).
+wrote(king, needful_things).
+wrote(king, carrie).
+wrote(king, cujo).
+wrote(king, the_stand).

@@ -1,0 +1,57 @@
+find:
+Some prolog tutorials
+-- http://www.csupomona.edu/~jrfisher/www/prolog_tutorial/contents.html
+-- http://www.csupomona.edu/~jrfisher/www/prolog_tutorial/pt_framer.html
+Prolog support forum
+-- http://www.tek-tips.com/threadminder.cfm?pid=345
+One online reference for the prolog version you're using (1.4)
+-- manual http://www.gprolog.org/manual/gprolog.html
+
+do:
+make a simple knowledge base, representing some books and authors
+find all books in database written by an author
+make a database of musicians and instruments, and musicians and genres
+find all musicians which play the guitar
+
+-------------------------------------------
+$ gprolog
+GNU Prolog 1.4.0
+By Daniel Diaz
+Copyright (C) 1999-2011 Daniel Diaz
+| ?- ['books.prolog'].
+compiling /Users/sbileschi/proj/SevenLanguagesSevenWeeks/prolog/day1/books.prolog for byte code...
+/Users/sbileschi/proj/SevenLanguagesSevenWeeks/prolog/day1/books.prolog compiled, 9 lines read - 1171 bytes written, 10 ms
+
+(1 ms) yes
+| ?- 
+wrote(king, X)
+.
+
+X = night_shift ? a
+
+X = needful_things
+
+X = carrie
+
+X = cujo
+
+X = the_stand
+
+yes
+
+---------------------------------------------
+$ gprolog
+GNU Prolog 1.4.0
+By Daniel Diaz
+Copyright (C) 1999-2011 Daniel Diaz
+| ?- ['music.prolog'].
+compiling /Users/sbileschi/proj/SevenLanguagesSevenWeeks/prolog/day1/music.prolog for byte code...
+/Users/sbileschi/proj/SevenLanguagesSevenWeeks/prolog/day1/music.prolog compiled, 8 lines read - 1152 bytes written, 12 ms
+
+(1 ms) yes
+| ?- instrument(P, guitar).
+
+P = slash ? a
+
+P = dave_mathews
+
