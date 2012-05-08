@@ -24,4 +24,9 @@ sudoku(Puzzle, Solution) :-
   valid(
     [Row1, Row2, Row3, Row4, 
      Col1, Col2, Col3, Col4, 
-     Square1, Square2, Square3, Square4]).
+     Square1, Square2, Square3, Square4]), 
+
+  print(Row1),nl,
+  print(Row2),nl,
+  print(Row3),nl,
+  print(Row4).

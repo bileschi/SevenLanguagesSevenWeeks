@@ -1,0 +1,17 @@
+---- find:
+-- predicates for printing / reading
+http://www.gprolog.org/manual/gprolog.html#htoc157
+
+-- how do predicates for printing only successful solutions work?
+via stack overflow:
+print_all_solutions :-
+  solution(Sol),
+  write(Sol),
+  fail. % this causes backtracking
+print_all_solutions. % succed
+
+---- do:
+-- modify sudoku solution to solve a 9x9 puzzle.
+-- make the sudoku solver print prettier solutions.
+-- Solve the eight queens puzzle by taking a list of queens.  Rather than a tuple, represent each queen as an integer, from 1 to 8. Get the row of the queen from its position in the list, and the column from the value in the list.
+
