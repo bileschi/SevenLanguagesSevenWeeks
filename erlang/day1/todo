@@ -1,0 +1,18 @@
+find:
+-- The Erlang official site
+http://www.erlang.org/
+
+-- The official documentation of the Erlang function library
+http://www.erlang.org/doc/man/STDLIB_app.html
+
+-- Documentation of the Erlang OTP library
+http://www.erlang.org/faq/libraries.html
+
+-- Some cool little example code:
+http://www.erlang.org/article/tag/small_examples
+
+
+todo:
+--write a function that uses recursion to determine the number of words in a string.
+-- write a function that uses recursion to write to 10.
+-- write a function that uses pattern matching to selectively print "error: message" or "success" depending on user input of the form {error, Message} or success
