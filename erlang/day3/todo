@@ -1,0 +1,16 @@
+find: 
+-- An OTP service that will restart a process if it dies.
+http://www.erlang.org/doc/design_principles/sup_princ.html
+-- Documentation for building a simple OTP server.
+http://www.erlang.org/doc/design_principles/gen_server_concepts.html
+http://www.erlang.org/doc/man/gen_server.html
+
+
+do:
+-- Monitor the translate_service and restart it should it die.
+-- Make the Doctor process restart itself if it should die.
+-- Make a monitor for the Doctor monitor.  If either monitor dies, restart it.
+
+Bonus:
+-- Create a basic OTP servier that logs messages to a file.
+-- Make the translate_service work across a network.
