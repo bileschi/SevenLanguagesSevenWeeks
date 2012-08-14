@@ -1,0 +1,6 @@
+location of words files
+mac_os_x:
+/usr/share/dict/words
+linux:
+/etc/ ... ?
+
