@@ -86,5 +86,5 @@
 		    (return-from search-compound 
 		      (list compound-word? solution?)))))))))
 
-(defun (main)
+(defun main ()
     (search-compound "dict"))
