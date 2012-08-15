@@ -1,7 +1,7 @@
-; ex: (file-to-lines "little_dict") ; returns a list containing 99 strings
-; use to pull lines as strings into a list.  Each line is a string element 
+; ex: (file-to-lines "little_dict") ; returns a list of strings from the file
+; used to pull lines as strings from a file into a list.  Each line is a string element 
 (defun file-to-lines (filename)
-  (let ((l ()))
+  (let (l)
     (with-open-file (stream filename)
       (do ((line (read-line stream nil)
 		 (read-line stream nil)))
