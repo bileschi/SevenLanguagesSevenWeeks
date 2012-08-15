@@ -66,12 +66,13 @@
 		    (dict-contains right-word dict))
 	       (return-from word-is-compound (list left-word right-word)))))))
 
-; ex: (main)
-; returns the longest word it can find that is made up of a concatenation of two other words
+; ex: (search-compound "dict")
+; returns the longest word it can find that is made up of a concatenation 
+; of two other words
 ; returns in the form '(longword (leftword rightword))
 ; in the event of a tie, it returns one of the tied elements
-(defun main ()
-  (let ((dict (hash-items-by-length (file-to-lines "dict"))))
+(defun search-compound (filename)
+  (let ((dict (hash-items-by-length (file-to-lines filename))))
     (let ((lengths (hash-keys dict)))
       ; loop for l in reverse lengths, biggest first
       (setf lengths (reverse lengths))
@@ -82,6 +83,8 @@
 		; check if word is actually compound
 		(let ((solution? (word-is-compound compound-word? dict)))
 		  (if solution?
-		    (return-from main (list compound-word? solution?)))))))))
+		    (return-from search-compound 
+		      (list compound-word? solution?)))))))))
 
-
+(defun (main)
+    (search-compound "dict"))
