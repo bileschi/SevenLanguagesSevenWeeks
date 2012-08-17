@@ -80,6 +80,19 @@
 	   (setf subs prefixes))))
     (return-from most-prefixes (list most subs))))
 
+; toy function returns the word with the most prefixes
+; which are also words.
+(defun most-factors (allwords dict)
+  (let ((most 0)
+	subs)
+    (loop for word in allwords do
+       (let ((factors (factorize-word word dict :LB most)))
+	 (when (> (length factors) most)
+	   (format t "~S : ~S~%" word factors)
+	   (setf most (length factors))
+	   (setf subs factors))))
+    (return-from most-factors (list most subs))))
+
 ; (defmacro dbformat (&rest Args)  `(format ,@Args))
 (defmacro dbformat (&rest Args) '() )
 
